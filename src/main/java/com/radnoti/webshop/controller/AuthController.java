@@ -19,11 +19,11 @@ public class AuthController {
 
     @PostMapping(path = "/registration")
     public ResponseDto registration(@RequestBody UserDto userDto) throws NoSuchAlgorithmException {
-        return new ResponseDto(userService.registration(userDto));
+        return userService.registration(userDto);
     }
 
     @PostMapping(path = "/login")
-    public void login(@RequestBody UserDto userDto) throws NoSuchAlgorithmException {
-        userService.login(userDto);
+    public ResponseDto login(@RequestBody UserDto userDto) throws NoSuchAlgorithmException {
+       return userService.login(userDto);
     }
 }

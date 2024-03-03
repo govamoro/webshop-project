@@ -87,4 +87,12 @@ public class JwtUtil {
         JSONObject data = new JSONObject(decode(parts[1]));
         return data.getString("userName");
     }
+
+    public Integer getIdFromAuthHeader(String header) {
+        String cleanToken = header.split(" ")[1];
+        String[] parts = cleanToken.split("\\.");
+        JSONObject data = new JSONObject(decode(parts[1]));
+        return data.getInt("id");
+
+    }
 }

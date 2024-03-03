@@ -36,7 +36,7 @@ public class Art implements Serializable {
     private String imgUrl;
 
     @Column(name = "created_year")
-    private Integer CreatedYear;
+    private Integer createdYear;
 
     @Column(name = "x_cm")
     private float xCm;
@@ -46,5 +46,8 @@ public class Art implements Serializable {
 
     @Column(name = "material")
     private Integer material;
+
+    @Column(name = "user_id")
+    private User user;
 
 }

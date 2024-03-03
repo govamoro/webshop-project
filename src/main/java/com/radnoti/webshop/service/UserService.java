@@ -2,6 +2,7 @@ package com.radnoti.webshop.service;
 
 import com.radnoti.webshop.enums.RoleEnum;
 import com.radnoti.webshop.mapper.UserMapper;
+import com.radnoti.webshop.model.dto.ResponseDto;
 import com.radnoti.webshop.model.dto.UserDto;
 import com.radnoti.webshop.model.entity.Role;
 import com.radnoti.webshop.model.entity.User;
@@ -25,7 +26,7 @@ public class UserService {
     private final HashUtil hashUtil;
     private final JwtUtil jwtUtil;
 
-    public Integer registration(UserDto userDto) throws NoSuchAlgorithmException {
+    public ResponseDto registration(UserDto userDto) throws NoSuchAlgorithmException {
         if (userDto.getUserName() == null || userDto.getUserName().isBlank()
             || userDto.getEmail() == null || userDto.getEmail().isBlank()
             || userDto.getPassword() == null || userDto.getPassword().isBlank()
@@ -46,19 +47,17 @@ public class UserService {
         user.setRegisteredAt(now);
         user.setIsDeleted(false);
         user.setRole(new Role(RoleEnum.USER.getId()));
-        System.out.println(user);
         userRepository.save(user);
-        System.out.println(user);
 
 
         /*User user = new User();
         user.setEmail(userDto.getEmail());
         userRepository.save(user);*/
 
-        return user.getId();
+        return new ResponseDto(user.getId());
     }
 
-    public void login(UserDto userDto) throws NoSuchAlgorithmException {
+    public ResponseDto login(UserDto userDto) throws NoSuchAlgorithmException {
         if (userDto.getUserName() == null || userDto.getUserName().isBlank()
                 || userDto.getPassword() == null || userDto.getPassword().isBlank()){
             throw new RuntimeException("hibások az adatok");
@@ -71,8 +70,7 @@ public class UserService {
             throw new RuntimeException("rossz jelszó");
         }
 
-
-        System.err.println(jwtUtil.generateJwt(byUsername.get()));
+        return new ResponseDto(jwtUtil.generateJwt(byUsername.get()));
     }
 }
 
