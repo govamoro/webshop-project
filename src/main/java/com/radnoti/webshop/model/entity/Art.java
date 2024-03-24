@@ -1,6 +1,7 @@
 package com.radnoti.webshop.model.entity;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class Art implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
+    @NonNull()
     private Integer id;
 
     @Column(name = "title")
@@ -47,7 +49,9 @@ public class Art implements Serializable {
     @Column(name = "material")
     private Integer material;
 
-    @Column(name = "user_id")
+    //todo mashol is nezd meg h jo e tivadar!!44 szar volt a join
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
     private User user;
 
 }

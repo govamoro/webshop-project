@@ -17,6 +17,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
 
+//TODO ezek kozul lehet nehany/vagy az osszes fasz tudja static!!
 @Component
 public class JwtUtil {
 
@@ -58,10 +59,11 @@ public class JwtUtil {
 
     }
 
-    public boolean validateJwt(String token) {
+    //bemeno param: bearer eylnfjkjds.qfjbsdkhjbc.djksbjckhd
+    public boolean validateJwt(String authHeader) {
 
         try{
-            String cleanToken = token.split(" ")[1];
+            String cleanToken = authHeader.split(" ")[1];
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(cleanToken);
 
             String[] parts = cleanToken.split("\\.");

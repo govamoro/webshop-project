@@ -15,7 +15,6 @@ import java.util.Optional;
 
 
 @Service
-@RequiredArgsConstructor
 public class ArtService {
 
 
@@ -53,8 +52,10 @@ public class ArtService {
         artRepository.delete(art);
     }
 
-    public List<Art> getOwnedProducts(String authHeader) {
+    public List<ArtDto> getOwnedProducts(String authHeader) {
         Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
-         return artRepository.findProductsByUserId(userId);
+        List<Art> productsByUserId = artRepository.findProductsByUserId(userId);
+        List<ArtDto> artDtoList = artMapper.fromEntityToDto(productsByUserId);
+        return artDtoList;
     }
 }

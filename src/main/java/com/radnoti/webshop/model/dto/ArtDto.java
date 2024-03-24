@@ -17,7 +17,7 @@ public class ArtDto {
     private Integer price;
     private String description;
     private String imgUrl;
-    private Integer CreatedYear;
+    private Integer createdYear;
     private float xCm;
     private float yCm;
     private Integer material;

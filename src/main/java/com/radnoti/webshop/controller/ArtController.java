@@ -25,7 +25,7 @@ public class ArtController {
 
     @PostMapping("/add")
     @RolesAllowed({RoleEnum.Types.ADMIN, RoleEnum.Types.USER})
-    public ResponseDto addProduct(@RequestBody ArtDto artDto){
+    public ResponseDto addProduct(@RequestBody ArtDto artDto) {
         return artService.saveProduct(artDto);
     }
 
@@ -36,13 +36,13 @@ public class ArtController {
 
     @RolesAllowed({RoleEnum.Types.ADMIN, RoleEnum.Types.USER})
     @DeleteMapping("/delete/{productId}")
-    public void deleteProduct(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader,@PathVariable Integer productId) {
+    public void deleteProduct(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader, @PathVariable Integer productId) {
         artService.delete(authHeader, productId);
     }
 
     @RolesAllowed({RoleEnum.Types.ADMIN, RoleEnum.Types.USER})
-    @GetMapping("/get-owned-products/")
-    public ResponseEntity<List<Art>> getOwnedProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader) {
+    @GetMapping("/get-owned-products")
+    public ResponseEntity<List<ArtDto>> getOwnedProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader) {
         return ResponseEntity.ok(artService.getOwnedProducts(authHeader));
     }
 }
