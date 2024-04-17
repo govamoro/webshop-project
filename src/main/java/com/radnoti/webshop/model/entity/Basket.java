@@ -21,10 +21,11 @@ public class Basket implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne
-    private User user_id;
+    //@JoinColumn(name = "user_id", referencedColumnName = "id")
+    //TODO majd adatbázisban 1az1-hez kapcsolatot kell csinálni
+    @OneToOne
+    private User user;
 
     @JoinColumn(name = "art_id", referencedColumnName = "id")
-    private Art art_id;
+    private Art art;
 }

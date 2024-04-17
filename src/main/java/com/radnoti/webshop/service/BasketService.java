@@ -36,6 +36,10 @@ public class BasketService{
                 throw new RuntimeException("nincs ilyen art");
             }
             Basket basket = byId.get();
+            if (basket.getUser().getId() != userId){
+                throw new RuntimeException("nem a tied te fadz");
+            }
+
             basketRepository.delete(basket);
         }
     }

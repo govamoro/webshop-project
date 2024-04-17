@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "art")
+@Table(name = "order")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,11 +22,11 @@ public class Order implements Serializable {
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
-    private User user_id;
+    private User userId;
 
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     @ManyToOne
-    private Material material_id;
+    private Material materialId;
 
     @Column(name = "size")
     private Integer size;

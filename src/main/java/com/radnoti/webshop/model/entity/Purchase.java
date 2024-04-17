@@ -24,7 +24,4 @@ public class Purchase implements Serializable {
     @Column(name = "type")
     private String type;
 
-    public Purchase(Integer id) {
-        this.id = id;
-    }
 }

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
 
 @RestController
-@RequestMapping(path = "/product")
-@RequiredArgsConstructor
+@RequestMapping(path = "/order")
+// @RequiredArgsConstructor ez csak akkor kell ha "private final OrderService orderService;" , @autowired annotáció nélkül
 @CrossOrigin(origins = "*")
 
 public class OrderController {
