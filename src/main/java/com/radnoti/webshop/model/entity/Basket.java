@@ -26,6 +26,5 @@ public class Basket implements Serializable {
     private User user_id;
 
     @JoinColumn(name = "art_id", referencedColumnName = "id")
-    @ManyToOne
     private Art art_id;
 }

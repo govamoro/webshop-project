@@ -1,7 +1,6 @@
 package com.radnoti.webshop.controller;
 
 import com.radnoti.webshop.model.dto.BasketDto;
-import com.radnoti.webshop.model.entity.Art;
 import com.radnoti.webshop.model.entity.Basket;
 import com.radnoti.webshop.service.BasketService;
 import lombok.RequiredArgsConstructor;
