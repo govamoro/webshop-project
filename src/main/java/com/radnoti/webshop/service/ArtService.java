@@ -2,16 +2,20 @@ package com.radnoti.webshop.service;
 
 import com.radnoti.webshop.mapper.ArtMapper;
 import com.radnoti.webshop.model.dto.ArtDto;
+import com.radnoti.webshop.model.dto.MaterialDto;
 import com.radnoti.webshop.model.dto.ResponseDto;
 import com.radnoti.webshop.model.entity.Art;
+import com.radnoti.webshop.model.entity.Material;
 import com.radnoti.webshop.repository.ArtRepository;
 import com.radnoti.webshop.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -57,5 +61,15 @@ public class ArtService {
         List<Art> productsByUserId = artRepository.findProductsByUserId(userId);
         List<ArtDto> artDtoList = artMapper.fromEntityToDto(productsByUserId);
         return artDtoList;
+    }
+
+    public List<ArtDto> getAllArts() {
+        Iterable<Art> artsIterable = artRepository.findAll();
+        List<Art> arts = new ArrayList<>();
+        artsIterable.forEach(arts::add);
+
+        return arts.stream()
+                .map(artMapper::fromEntityToDto)
+                .collect(Collectors.toList());
     }
 }

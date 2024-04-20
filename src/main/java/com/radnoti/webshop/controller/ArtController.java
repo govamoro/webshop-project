@@ -2,6 +2,7 @@ package com.radnoti.webshop.controller;
 
 import com.radnoti.webshop.enums.RoleEnum;
 import com.radnoti.webshop.model.dto.ArtDto;
+import com.radnoti.webshop.model.dto.MaterialDto;
 import com.radnoti.webshop.model.dto.ResponseDto;
 import com.radnoti.webshop.model.entity.Art;
 import com.radnoti.webshop.service.ArtService;
@@ -34,6 +35,12 @@ public class ArtController {
         return artService.getProductById(productId);
     }
 
+    @GetMapping("/get-all")
+    public ResponseEntity<List<ArtDto>> getAllArts() {
+        List<ArtDto> artDtoList = artService.getAllArts();
+        return ResponseEntity.ok(artDtoList);
+    }
+    
     @RolesAllowed({RoleEnum.Types.ADMIN, RoleEnum.Types.USER})
     @DeleteMapping("/delete/{productId}")
     public void deleteProduct(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader, @PathVariable Integer productId) {
