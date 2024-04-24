@@ -46,9 +46,6 @@ public class Art implements Serializable {
     @Column(name = "y_cm")
     private float yCm;
 
-    @Column(name = "material")
-    private Integer material;
-
     //todo mashol is nezd meg h jo e tivadar!!44 szar volt a join
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne

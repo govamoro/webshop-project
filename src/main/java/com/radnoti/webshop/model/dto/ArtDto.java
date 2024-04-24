@@ -20,6 +20,5 @@ public class ArtDto {
     private Integer createdYear;
     private float xCm;
     private float yCm;
-    private Integer material;
 
 }
