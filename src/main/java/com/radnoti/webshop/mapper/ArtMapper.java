@@ -11,4 +11,6 @@ public interface ArtMapper {
     ArtDto fromEntityToDto(Art art);
     List<ArtDto> fromEntityToDto(List<Art> artList);
     Art fromDtoToEntity(ArtDto artDto);
+    List<Art> fromDtoToEntity(List<ArtDto> artList);
+
 }

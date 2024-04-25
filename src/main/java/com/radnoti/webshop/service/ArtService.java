@@ -72,4 +72,11 @@ public class ArtService {
                 .map(artMapper::fromEntityToDto)
                 .collect(Collectors.toList());
     }
+
+    public List<ArtDto> getAll() {
+        List<Art> arts = artRepository.getAll();
+        List<ArtDto> artDtos = artMapper.fromEntityToDto(arts);
+        return  artDtos;
+    }
+
 }

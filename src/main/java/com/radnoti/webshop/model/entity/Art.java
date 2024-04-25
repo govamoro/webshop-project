@@ -5,6 +5,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "art")
@@ -50,5 +51,13 @@ public class Art implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User user;
+
+    @ToString.Exclude
+    @ManyToMany
+    List<Material> material;
+
+    @ToString.Exclude
+    @ManyToMany
+    List<Style> style;
 
 }

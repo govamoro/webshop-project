@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -20,5 +22,7 @@ public class ArtDto {
     private Integer createdYear;
     private float xCm;
     private float yCm;
+    private List<MaterialDto> material;
+    private List<StyleDto> style;
 
 }

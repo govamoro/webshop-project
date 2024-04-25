@@ -15,4 +15,8 @@ public interface ArtRepository extends CrudRepository<Art, Integer> {
 
     @Query("delete from Art a where a.id = :productId and a.user = :userId")
     void findProductsByUserId(Integer userId, Integer productId);
+
+    @Query("SELECT a from Art a")
+    List<Art> getAll();
 }
+
