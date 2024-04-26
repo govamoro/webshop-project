@@ -12,6 +12,7 @@ import lombok.ToString;
 
 public class BasketDto {
     private Integer id;
-    private Integer user_id;
-    private Integer art_id;
+    private UserDto user;
+
+
 }

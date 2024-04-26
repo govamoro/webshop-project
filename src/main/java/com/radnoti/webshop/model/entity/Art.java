@@ -60,4 +60,8 @@ public class Art implements Serializable {
     @ManyToMany
     List<Style> style;
 
+    @JoinColumn(name = "basket_id", referencedColumnName = "id")
+    @ManyToOne
+    private Basket basket;
+
 }

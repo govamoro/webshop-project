@@ -3,6 +3,7 @@ package com.radnoti.webshop.model.entity;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 
@@ -26,6 +27,4 @@ public class Basket implements Serializable {
     @OneToOne
     private User user;
 
-    @JoinColumn(name = "art_id", referencedColumnName = "id")
-    private Art art;
 }

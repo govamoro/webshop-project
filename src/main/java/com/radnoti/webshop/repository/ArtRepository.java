@@ -18,5 +18,8 @@ public interface ArtRepository extends CrudRepository<Art, Integer> {
 
     @Query("SELECT a from Art a")
     List<Art> getAll();
+
+    @Query("Select a from Art a where a.basket.id in :basketIdList")
+    List<Art> findByBasketList(List<Integer> basketIdList);
 }
 

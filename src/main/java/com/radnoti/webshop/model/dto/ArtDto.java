@@ -24,5 +24,6 @@ public class ArtDto {
     private float yCm;
     private List<MaterialDto> material;
     private List<StyleDto> style;
+    private BasketDto basket;
 
 }
