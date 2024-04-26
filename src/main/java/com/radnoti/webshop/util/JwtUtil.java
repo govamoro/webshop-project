@@ -61,7 +61,9 @@ public class JwtUtil {
 
     //bemeno param: bearer eylnfjkjds.qfjbsdkhjbc.djksbjckhd
     public boolean validateJwt(String authHeader) {
-
+        if(authHeader.equals("null")){
+            return false;
+        }
         try{
             String cleanToken = authHeader.split(" ")[1];
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(cleanToken);
