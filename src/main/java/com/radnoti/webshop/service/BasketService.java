@@ -1,9 +1,9 @@
 package com.radnoti.webshop.service;
 
+import com.radnoti.webshop.ValamilyenException;
 import com.radnoti.webshop.mapper.ArtMapper;
 import com.radnoti.webshop.mapper.BasketMapper;
 import com.radnoti.webshop.model.dto.ArtDto;
-import com.radnoti.webshop.model.dto.BasketDto;
 import com.radnoti.webshop.model.dto.ResponseDto;
 import com.radnoti.webshop.model.entity.Art;
 import com.radnoti.webshop.model.entity.Basket;
@@ -16,13 +16,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.radnoti.webshop.util.UserValidatorUtil.validateUser;
+
 @Service
 @RequiredArgsConstructor
-public class BasketService{
+public class BasketService {
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -38,18 +42,17 @@ public class BasketService{
     private ArtMapper artMapper;
 
 
-
     public ResponseDto saveBasket(String authHeader, ArtDto artDto) {
         Integer artId = artDto.getId();
         Optional<Art> optionalArt = artRepository.findById(artId);
-        if (optionalArt.isEmpty()){
+        if (optionalArt.isEmpty()) {
             throw new RuntimeException("nincs ilyen art");
         }
         Art art = optionalArt.get();
         Basket basket = new Basket();
         Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
         Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isEmpty()){
+        if (optionalUser.isEmpty()) {
             throw new RuntimeException("nincs ilyen user");
         }
 
@@ -60,30 +63,52 @@ public class BasketService{
         return new ResponseDto(savedBasket.getId());
     }
 
+    @Transactional
+    public void removeArtFromBasket(String authHeader, ArtDto artDto) throws ValamilyenException {
+        Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
+        Optional<Art> optionalArt = artRepository.findById(artDto.getId());
+        Optional<Basket> optionalBasket = basketRepository.findById(artDto.getBasket().getId());
 
+        if (optionalBasket.isEmpty()) {
+            throw new ValamilyenException("nincs ilyen kosar");
+        }
 
-    public void delete(String authHeader, Integer productId) {
+        if (validateUser(optionalBasket.get().getUser().getId(), userId)) {
+            throw new ValamilyenException("invalid user");
+        }
 
-            artRepository.deleteBasket(productId);
-            Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
-            Optional<Basket> byId = basketRepository.findById(productId);
+        if (optionalArt.isEmpty()) {
+            throw new ValamilyenException("nincs ilyen art");
+        }
 
-            if (byId.isEmpty()){
-                throw new RuntimeException("nincs ilyen art");
-            }
-            Basket basket = byId.get();
-            if (basket.getUser().getId() != userId){
-                throw new RuntimeException("nem a tied");
-            }
+        Art art = optionalArt.get();
 
-            basketRepository.delete(basket);
+        artRepository.removeArtFromBasket(art.getId());
+    }
+
+    @Transactional
+    public void deleteWholeBasket(String authHeader, Integer basketId) throws ValamilyenException {
+
+        Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
+        Optional<Basket> optionalBasket = basketRepository.findById(basketId);
+
+        if (optionalBasket.isEmpty()) {
+            throw new ValamilyenException("nincs ilyen kosar");
+        }
+        Basket basket = optionalBasket.get();
+        if (basket.getUser().getId() != userId) {
+            throw new RuntimeException("nem a tied");
+        }
+
+        artRepository.deleteWholeBasket(basketId);
+        basketRepository.delete(basket);
     }
 
 
-    public List<ArtDto> getOwnedBasketItems(String authHeader){
+    public List<ArtDto> getOwnedBasketItems(String authHeader) {
         Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
         Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isEmpty()){
+        if (optionalUser.isEmpty()) {
             throw new RuntimeException("nincs ilyen user");
         }
         List<Integer> basketIdList = new ArrayList<>();
