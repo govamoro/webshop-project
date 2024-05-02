@@ -63,6 +63,8 @@ public class BasketService{
 
 
     public void delete(String authHeader, Integer productId) {
+
+            artRepository.deleteBasket(productId);
             Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
             Optional<Basket> byId = basketRepository.findById(productId);
 
@@ -71,7 +73,7 @@ public class BasketService{
             }
             Basket basket = byId.get();
             if (basket.getUser().getId() != userId){
-                throw new RuntimeException("nem a tied te fadz");
+                throw new RuntimeException("nem a tied");
             }
 
             basketRepository.delete(basket);
