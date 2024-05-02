@@ -31,7 +31,7 @@ public class BasketController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/remove-art-from-basket/")
+    @PostMapping("/remove-art-from-basket")
     public ResponseEntity<Void> removeArtFromBasket(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader, @RequestBody ArtDto artDto) throws ValamilyenException {
         basketService.removeArtFromBasket(authHeader, artDto);
         return ResponseEntity.ok().build();
