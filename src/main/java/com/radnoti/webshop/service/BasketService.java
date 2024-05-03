@@ -82,8 +82,10 @@ public class BasketService {
         }
 
         Art art = optionalArt.get();
+        Basket basket = optionalBasket.get();
 
         artRepository.removeArtFromBasket(art.getId());
+        basketRepository.delete(basket);
     }
 
     @Transactional
