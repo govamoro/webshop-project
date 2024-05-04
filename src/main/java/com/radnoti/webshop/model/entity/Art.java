@@ -20,7 +20,7 @@ public class Art implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    @NonNull()
+    //@NonNull()
     private Integer id;
 
     @Column(name = "title")

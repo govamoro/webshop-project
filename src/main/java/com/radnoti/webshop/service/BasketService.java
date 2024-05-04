@@ -56,12 +56,46 @@ public class BasketService {
             throw new RuntimeException("nincs ilyen user");
         }
 
+        /*if(optionalArt.isPresent()){
+            throw new RuntimeException("Már a kosárban van a termék");
+        }*/
+
         basket.setUser(optionalUser.get());
         Basket savedBasket = basketRepository.save(basket);
         art.setBasket(savedBasket);
         artRepository.save(art);
         return new ResponseDto(savedBasket.getId());
     }
+
+    /*public ResponseDto saveBasket(String authHeader, ArtDto artDto) {
+        Integer artId = artDto.getId();
+        Optional<Art> optionalArt = artRepository.findById(artId);
+        if (optionalArt.isEmpty()) {
+            throw new RuntimeException("Nincs ilyen art");
+        }
+        Art art = optionalArt.get();
+
+        Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("Nincs ilyen user");
+        }
+        User user = optionalUser.get();
+
+        // Ellenőrizzük, hogy az adott felhasználó kosarában van-e már az adott termék
+        Optional<Basket> optionalBasket = basketRepository.findByUserAndArt(user, art);
+        if (optionalBasket.isPresent()) {
+            throw new RuntimeException("Már a kosárban van a termék");
+        }
+
+        Basket basket = new Basket();
+        basket.setUser(user);
+        Basket savedBasket = basketRepository.save(basket);
+        art.setBasket(savedBasket);
+        artRepository.save(art);
+        return new ResponseDto(savedBasket.getId());
+    }*/
+
 
     @Transactional
     public void removeArtFromBasket(String authHeader, ArtDto artDto) throws ValamilyenException {

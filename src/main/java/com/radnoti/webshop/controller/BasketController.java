@@ -2,6 +2,7 @@ package com.radnoti.webshop.controller;
 
 import com.radnoti.webshop.ValamilyenException;
 import com.radnoti.webshop.model.dto.ArtDto;
+import com.radnoti.webshop.model.dto.ResponseDto;
 import com.radnoti.webshop.service.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -20,9 +21,9 @@ public class BasketController {
     private final BasketService basketService;
 
     @PostMapping("/save")
-    public ResponseEntity<Void> saveBasket(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader, @RequestBody ArtDto artDto) {
-        basketService.saveBasket(authHeader, artDto);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseDto saveBasket(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader, @RequestBody ArtDto artDto) {
+        return basketService.saveBasket(authHeader, artDto);
+        //return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/delete/{basketId}")
