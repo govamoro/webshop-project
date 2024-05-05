@@ -15,6 +15,4 @@ public interface BasketRepository extends CrudRepository<Basket, Integer> {
     @Query("select b from Basket b where b.user.id = :userId")
     List<Basket> getOwnedBaskets(Integer userId);
 
-    /*@Query("select b from Basket b where b.user.id = :userId and b.art = :art")
-    Optional<Basket> findByUserAndArt(User user, Art art);*/
 }

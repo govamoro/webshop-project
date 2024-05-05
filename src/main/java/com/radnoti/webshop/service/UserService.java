@@ -32,13 +32,13 @@ public class UserService {
             || userDto.getPassword() == null || userDto.getPassword().isBlank()
             /*|| userDto.getFirstName() == null || userDto.getFirstName().isBlank()
             || userDto.getLastName() == null || userDto.getLastName().isBlank()*/){
-            throw new RuntimeException("sasdasdas");
+            throw new RuntimeException("Tölts ki minden mezőt");
         }
         if (userRepository.findByUsername(userDto.getUserName()).isPresent()){
-            throw new RuntimeException("van már ilyen username");
+            throw new RuntimeException("Létezik már ilyen felhasználónév");
         }
         if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
-            throw new RuntimeException("van már ilyen email");
+            throw new RuntimeException("Létezik már ilyen e-mail cím");
         }
 
         ZonedDateTime now = ZonedDateTime.now();
@@ -60,20 +60,16 @@ public class UserService {
     public ResponseDto login(UserDto userDto) throws NoSuchAlgorithmException {
         if (userDto.getUserName() == null || userDto.getUserName().isBlank()
                 || userDto.getPassword() == null || userDto.getPassword().isBlank()){
-            throw new RuntimeException("hibások az adatok");
+            throw new RuntimeException("Hibások az adatok");
         }
         Optional<User> byUsername = userRepository.findByUsername(userDto.getUserName());
         if (byUsername.isEmpty()){
-            throw new RuntimeException("nincs ilyen user");
+            throw new RuntimeException("Nincs ilyen felhasználónév");
         }
         if (!byUsername.get().getPassword().equals(hashUtil.getSHA256Hash(userDto.getPassword()))){
-            throw new RuntimeException("rossz jelszó");
+            throw new RuntimeException("Hibás jelszó");
         }
 
         return new ResponseDto(jwtUtil.generateJwt(byUsername.get()));
     }
 }
-
-/* Írjak egy mappert, ami a userből csinál userDto-t és fordítva
-
-* */

@@ -46,19 +46,20 @@ public class BasketService {
         Integer artId = artDto.getId();
         Optional<Art> optionalArt = artRepository.findById(artId);
         if (optionalArt.isEmpty()) {
-            throw new RuntimeException("nincs ilyen art");
+            throw new RuntimeException("Nincs ilyen termék");
         }
         Art art = optionalArt.get();
         Basket basket = new Basket();
         Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("nincs ilyen user");
+            throw new RuntimeException("Nincs ilyen felhasználó");
         }
 
-        /*if(optionalArt.isPresent()){
-            throw new RuntimeException("Már a kosárban van a termék");
-        }*/
+        User user = optionalUser.get();
+        if (art.getBasket() != null && art.getBasket().getUser() == user) {
+            throw new RuntimeException("Már a kosaradban van!");
+        }
 
         basket.setUser(optionalUser.get());
         Basket savedBasket = basketRepository.save(basket);
@@ -104,15 +105,15 @@ public class BasketService {
         Optional<Basket> optionalBasket = basketRepository.findById(artDto.getBasket().getId());
 
         if (optionalBasket.isEmpty()) {
-            throw new ValamilyenException("nincs ilyen kosar");
+            throw new ValamilyenException("Nem létezik ilyen kosár");
         }
 
         if (validateUser(optionalBasket.get().getUser().getId(), userId)) {
-            throw new ValamilyenException("invalid user");
+            throw new ValamilyenException("Nem megfelelő felhasználó");
         }
 
         if (optionalArt.isEmpty()) {
-            throw new ValamilyenException("nincs ilyen art");
+            throw new ValamilyenException("Nem létezik ilyen termék");
         }
 
         Art art = optionalArt.get();
@@ -129,11 +130,11 @@ public class BasketService {
         Optional<Basket> optionalBasket = basketRepository.findById(basketId);
 
         if (optionalBasket.isEmpty()) {
-            throw new ValamilyenException("nincs ilyen kosar");
+            throw new ValamilyenException("Nem létezik ilyen kosár");
         }
         Basket basket = optionalBasket.get();
         if (basket.getUser().getId() != userId) {
-            throw new RuntimeException("nem a tied");
+            throw new RuntimeException("Nem a tiéd a kosár");
         }
 
         artRepository.deleteWholeBasket(basketId);
@@ -145,7 +146,7 @@ public class BasketService {
         Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("nincs ilyen user");
+            throw new RuntimeException("Nem létezik ilyen felhasználó");
         }
         List<Integer> basketIdList = new ArrayList<>();
         List<Basket> ownedBaskets = basketRepository.getOwnedBaskets(userId);

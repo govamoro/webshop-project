@@ -22,8 +22,6 @@ public class Basket implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    //@JoinColumn(name = "user_id", referencedColumnName = "id")
-    //TODO majd adatbázisban 1az1-hez kapcsolatot kell csinálni
     @OneToOne
     private User user;
 

@@ -68,15 +68,16 @@ public class ArtService {
         List<Art> arts = new ArrayList<>();
         artsIterable.forEach(arts::add);
 
-        return arts.stream()
-                .map(artMapper::fromEntityToDto)
-                .collect(Collectors.toList());
-    }
+        List<ArtDto> list = new ArrayList<>();
+        for (Art art : arts) {
+            if (art.getBasket() != null){
+                continue;
+            }
+            ArtDto fromEntityToDto = artMapper.fromEntityToDto(art);
+            list.add(fromEntityToDto);
+        }
 
-    public List<ArtDto> getAll() {
-        List<Art> arts = artRepository.getAll();
-        List<ArtDto> artDtos = artMapper.fromEntityToDto(arts);
-        return  artDtos;
+        return list;
     }
 
 }

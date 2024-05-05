@@ -41,10 +41,10 @@ public class ArtController {
         return ResponseEntity.ok(artDtoList);
     }
 
-    @GetMapping("/get-all2")
+    /*@GetMapping("/get-all2")
     public ResponseEntity<List<ArtDto>> getAll() {
         return ResponseEntity.ok(artService.getAll());
-    }
+    }*/
     
     @RolesAllowed({RoleEnum.Types.ADMIN, RoleEnum.Types.USER})
     @DeleteMapping("/delete/{productId}")

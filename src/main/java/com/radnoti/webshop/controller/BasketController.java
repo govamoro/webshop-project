@@ -43,20 +43,5 @@ public class BasketController {
         return ResponseEntity.ok(basketService.getOwnedBasketItems(authHeader));
     }
 
-    /* public void delete(String authHeader, Integer productId) {
-        //n+1 problema
-        Integer userId = jwtUtil.getIdFromAuthHeader(authHeader);
-        Optional<Basket> byId = basketRepository.findById(productId);
 
-        if (byId.isEmpty()){
-            throw new RuntimeException("Üres a kosár");
-        }
-        Basket basket = byId.get();
-
-        if (basket.getUser().getId() != userId){
-            throw new RuntimeException("");
-        }
-
-        basketRepository.delete(basket);
-    } */
 }
